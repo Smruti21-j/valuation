@@ -1,0 +1,10 @@
+ streamlit
+openai
+jinja2
+pandas
+xhtml2pdf
+xlrd
+percent 
+
+
+

@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{{ company_name | default('Valuation Report') }}</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    {{ css }}
+  </style>
+</head>
+<body>
+
+<!-- COVER -->
+<section class="page cover">
+  <div class="cover-inner">
+    <h1>{{ company_name | default('Company') }}</h1>
+    <h2>Valuation Report — {{ unit_name | default('Business Unit') }}</h2>
+    <div class="val-date">Valuation Date – {{ valuation_date | default('—') }}</div>
+    <ul class="cover-list">
+      {% for item in cover_services | default([]) %}
+        <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+    <p class="confidential">STRICTLY PRIVATE & CONFIDENTIAL</p>
+    <div class="advisor">{{ prepared_by | default('Valuation Advisor') }}</div>
+  </div>
+</section>
+
+<!-- TOC -->
+<section class="page">
+  <h2>Table of Contents</h2>
+  <table class="toc">
+    <tbody>
+      <tr><td>Executive Summary</td><td class="num">3</td></tr>
+      <tr><td>Objective & Scope</td><td class="num">4</td></tr>
+      <tr><td>Type & Premise of Value</td><td class="num">5</td></tr>
+      <tr><td>Sources of Information</td><td class="num">6</td></tr>
+      <tr><td>Industry Overview</td><td class="num">7</td></tr>
+      <tr><td>Company Overview</td><td class="num">8</td></tr>
+      <tr><td>Historical Financial Performance</td><td class="num">9</td></tr>
+      <tr><td>Projected Financials</td><td class="num">10</td></tr>
+      <tr><td>Valuation Approach & Methodology</td><td class="num">11</td></tr>
+      <tr><td>WACC Calculation</td><td class="num">12</td></tr>
+      <tr><td>DCF Summary</td><td class="num">13</td></tr>
+      <tr><td>DCF Detailed Workings</td><td class="num">14</td></tr>
+      <tr><td>Sensitivity Analysis</td><td class="num">15</td></tr>
+      <tr><td>Comparable Company Analysis</td><td class="num">16</td></tr>
+      <tr><td>Transaction Multiples Analysis</td><td class="num">17</td></tr>
+      <tr><td>Balance Sheet Summary</td><td class="num">18</td></tr>
+      <tr><td>Income Statement Summary</td><td class="num">19</td></tr>
+      <tr><td>Cash Flow Statement Summary</td><td class="num">20</td></tr>
+      <tr><td>Assumptions & Key Inputs</td><td class="num">21</td></tr>
+      <tr><td>Limitations & Disclaimers</td><td class="num">22</td></tr>
+      <tr><td>Glossary of Terms</td><td class="num">23</td></tr>
+      <tr><td>Appendices</td><td class="num">24+</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- EXECUTIVE SUMMARY -->
+<section class="page">
+  <h2>Executive Summary</h2>
+  <p>{{ executive_summary | default('The executive summary will be generated based on the uploaded Excel and computed valuation outputs.') }}</p>
+
+  <div class="grid-3">
+    <div class="card">
+      <h3>WACC</h3>
+      <p class="big">{{ wacc_display | default('—') }}</p>
+    </div>
+    <div class="card">
+      <h3>Terminal Growth Rate</h3>
+      <p class="big">{{ terminal_growth_rate | default('—') }}</p>
+    </div>
+    <div class="card">
+      <h3>Enterprise Value</h3>
+      <p class="big">{{ enterprise_value | default('—') }}</p>
+    </div>
+  </div>
+
+  <table class="summarytable">
+    <thead><tr><th>Particular</th><th class="num">Value</th></tr></thead>
+    <tbody>
+      <tr><td>Equity Value (Post-Money)</td><td class="num emph">{{ equity_post_money | default('—') }}</td></tr>
+      <tr><td>Enterprise Value</td><td class="num">{{ enterprise_value | default('—') }}</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- OBJECTIVE & SCOPE -->
+<section class="page">
+  <h2>Objective & Scope</h2>
+  <ul>
+    {% for bullet in objective_scope | default([]) %}
+      <li>{{ bullet }}</li>
+    {% endfor %}
+  </ul>
+</section>
+
+<!-- TYPE & PREMISE -->
+<section class="page">
+  <h2>Type & Premise of Value</h2>
+  <p>{{ type_premise | default('This section explains the standard of value and premise used for the engagement.') }}</p>
+</section>
+
+<!-- SOURCES -->
+<section class="page">
+  <h2>Sources of Information</h2>
+  <ul>
+    {% for src in sources_of_information | default([]) %}
+      <li>{{ src }}</li>
+    {% endfor %}
+  </ul>
+</section>
+
+<!-- INDUSTRY -->
+<section class="page">
+  <h2>Industry Overview</h2>
+  <ul>
+    {% for pt in industry_points | default([]) %}
+      <li>{{ pt }}</li>
+    {% endfor %}
+  </ul>
+</section>
+
+<!-- COMPANY -->
+<section class="page">
+  <h2>Company Overview</h2>
+  <ul>
+    {% for pt in company_points | default([]) %}
+      <li>{{ pt }}</li>
+    {% endfor %}
+  </ul>
+</section>
+
+<!-- HISTORICAL -->
+<section class="page">
+  <h2>Historical Financial Performance</h2>
+  <table class="wide">
+    <thead>
+      <tr>
+        {% for c in history_table.columns | default([]) %}
+          <th>{{ c }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in history_rows | default([]) %}
+        <tr>
+          {% for cell in row %}
+            <td class="num">{{ cell }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<!-- PROJECTED -->
+<section class="page">
+  <h2>Projected Financials</h2>
+  <table class="wide">
+    <thead>
+      <tr>
+        {% for c in forecast_columns | default([]) %}
+          <th>{{ c }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in forecast_rows | default([]) %}
+        <tr>
+          {% for cell in row %}
+            <td class="num">{{ cell }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<!-- METHODOLOGY -->
+<section class="page">
+  <h2>Valuation Approach & Methodology</h2>
+  <ul>
+    {% for pt in methodology_points | default([]) %}
+      <li>{{ pt }}</li>
+    {% endfor %}
+  </ul>
+</section>
+
+<!-- WACC -->
+<section class="page">
+  <h2>WACC Calculation</h2>
+  <table class="keytable">
+    {% for k_v in wacc_inputs_items | default([]) %}
+      <tr><th>{{ k_v[0] }}</th><td class="num">{{ k_v[1] }}</td></tr>
+    {% endfor %}
+  </table>
+</section>
+
+<!-- DCF SUMMARY -->
+<section class="page">
+  <h2>DCF Summary</h2>
+  <table class="keytable">
+    <tr><th>WACC</th><td class="num">{{ wacc_display | default('—') }}</td></tr>
+    <tr><th>Terminal Growth Rate</th><td class="num">{{ terminal_growth_rate | default('—') }}</td></tr>
+    <tr><th>Enterprise Value</th><td class="num">{{ enterprise_value | default('—') }}</td></tr>
+    <tr><th>Equity Value (Post-Money)</th><td class="num emph">{{ equity_post_money | default('—') }}</td></tr>
+  </table>
+</section>
+
+<!-- DCF DETAIL -->
+<section class="page">
+  <h2>DCF Detailed Workings</h2>
+  <table class="wide">
+    <thead><tr><th>Year</th><th>FCFF</th><th>Discount Factor</th><th>PV (FCFF)</th></tr></thead>
+    <tbody>
+      {% for r in fcf_table | default([]) %}
+        <tr>
+          <td>{{ r.year_label }}</td>
+          <td class="num">{{ r.fcff }}</td>
+          <td class="num">{{ r.df }}</td>
+          <td class="num">{{ r.pv }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<!-- SENSITIVITY -->
+<section class="page">
+  <h2>Sensitivity Analysis (Enterprise Value)</h2>
+  <table class="wide">
+    <thead>
+      <tr>
+        <th>g \\ WACC</th>
+        {% for w in sensitivity.wacc_range | default([]) %}
+          <th class="num">{{ w }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for gval_row in sensitivity_rows | default([]) %}
+        <tr>
+          <td>{{ gval_row[0] }}</td>
+          {% for v in gval_row[1] %}
+            <td class="num">{{ v }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<!-- COMPARABLES -->
+<section class="page">
+  <h2>Comparable Company Analysis</h2>
+  <table class="wide">
+    <thead>
+      <tr>
+        {% for c in comps_table.columns | default([]) %}<th>{{ c }}</th>{% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in comps_rows | default([]) %}
+        <tr>{% for cell in row %}<td class="num">{{ cell }}</td>{% endfor %}</tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<!-- TRANSACTIONS -->
+<section class="page">
+  <h2>Transaction Multiples Analysis</h2>
+  <table class="wide">
+    <thead>
+      <tr>
+        {% for c in transactions_table.columns | default([]) %}<th>{{ c }}</th>{% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in transactions_rows | default([]) %}
+        <tr>{% for cell in row %}<td class="num">{{ cell }}</td>{% endfor %}</tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<!-- BALANCE SHEET -->
+<section class="page">
+  <h2>Balance Sheet Summary</h2>
+  <table class="wide">
+    <thead>
+      <tr><th>Particulars</th>{% for y in bs_years | default([]) %}<th class="num">{{ y }}</th>{% endfor %}</tr>
+    </thead>
+    <tbody>
+      {% for pr in bs_table_rows | default([]) %}
+        <tr>
+          <td>{{ pr[0] }}</td>
+          {% for v in pr[1] %}<td class="num">{{ v }}</td>{% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<!-- INCOME STATEMENT -->
+<section class="page">
+  <h2>Income Statement Summary</h2>
+  <table class="wide">
+    <thead>
+      <tr><th>Particulars</th>{% for y in is_years | default([]) %}<th class="num">{{ y }}</th>{% endfor %}</tr>
+    </thead>
+    <tbody>
+      {% for pr in is_table_rows | default([]) %}
+        <tr>
+          <td>{{ pr[0] }}</td>
+          {% for v in pr[1] %}<td class="num">{{ v }}</td>{% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<!-- CASH FLOW -->
+<section class="page">
+  <h2>Cash Flow Statement Summary</h2>
+  <table class="wide">
+    <thead>
+      <tr><th>Particulars</th>{% for y in cf_years | default([]) %}<th class="num">{{ y }}</th>{% endfor %}</tr>
+    </thead>
+    <tbody>
+      {% for pr in cf_table_rows | default([]) %}
+        <tr>
+          <td>{{ pr[0] }}</td>
+          {% for v in pr[1] %}<td class="num">{{ v }}</td>{% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<!-- ASSUMPTIONS -->
+<section class="page">
+  <h2>Assumptions & Key Inputs</h2>
+  <ul>
+    {% for a in assumptions | default([]) %}<li>{{ a }}</li>{% endfor %}
+  </ul>
+</section>
+
+<!-- LIMITATIONS -->
+<section class="page">
+  <h2>Limitations & Disclaimers</h2>
+  <ul>
+    {% for li in limitations | default([]) %}<li>{{ li }}</li>{% endfor %}
+  </ul>
+</section>
+
+<!-- GLOSSARY -->
+<section class="page">
+  <h2>Glossary of Terms</h2>
+  <ul>
+    {% for g in glossary | default([]) %}<li>{{ g }}</li>{% endfor %}
+  </ul>
+</section>
+
+<!-- APPENDICES -->
+{% for appx in appendix_tables | default([]) %}
+<section class="page">
+  <h2>{{ appx.title | default('Appendix') }}</h2>
+  <table class="wide small">
+    <thead>
+      <tr>
+        {% for c in appx.columns | default([]) %}<th>{{ c }}</th>{% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in appx.rows | default([]) %}
+        <tr>{% for cell in r %}<td class="num">{{ cell }}</td>{% endfor %}</tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endfor %}
+
+</body>
+</html>

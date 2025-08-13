@@ -1,0 +1,58 @@
+@page { size: A4; margin: 20mm 18mm 20mm 18mm; }
+
+body { font-family: Arial, Helvetica, sans-serif; color: #111; }
+
+.page { page-break-after: always; }
+.page:last-child { page-break-after: auto; }
+
+/* HEADINGS */
+h1, h2, h3 { margin: 0 0 10px 0; font-weight: 700; line-height: 1.25; }
+h1 { font-size: 26px; color: #003366; border-bottom: 4px solid #003366; padding-bottom: 6px; }
+h2 { font-size: 18px; background: #003366; color: #ffffff; padding: 6px 10px; }
+h3 { font-size: 13px; color: #003366; margin-top: 6px; }
+
+/* TEXT */
+p { line-height: 1.4; margin: 8px 0; }
+ul { margin: 8px 0 0 16px; }
+li { margin: 4px 0; }
+.small { font-size: 10px; color: #555; }
+.big { font-size: 16px; font-weight: 700; }
+.num { text-align: right; }
+.emph { font-weight: 700; color: #1aa260; }
+
+/* COVER */
+.cover { background: #003366; color: #ffffff; min-height: 100%; }
+.cover-inner { margin-top: 90px; text-align: center; }
+.cover h1 { color: #ffffff; border: none; font-size: 34px; }
+.cover h2 { background: none; color: #ffffff; font-size: 20px; padding: 0; }
+.val-date { margin-top: 6px; font-size: 12px; }
+.cover-list { margin: 18px auto 10px auto; display: inline-block; text-align: left; }
+.cover-list li { margin: 4px 0; }
+.confidential { margin-top: 16px; font-weight: 700; color: #ffd700; }
+.advisor { margin-top: 6px; font-size: 12px; color: #e6eef7; }
+
+/* TABLES */
+table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 10.5px; }
+th, td { border: 1px solid #bfc5cf; padding: 6px 8px; vertical-align: top; line-height: 1.25; }
+th { background: #003366; color: #ffffff; }
+tr:nth-child(even) td { background: #f8f9fa; }
+.toc td { border: none; border-bottom: 1px solid #d6dbe4; padding: 6px 4px; }
+.toc .num { text-align: right; }
+
+/* KEY TABLES */
+.keytable th { width: 45%; text-align: left; background: #dce6f1; color: #000; border: 1px solid #9eb6d0; }
+.keytable td { background: #ffffff; }
+
+/* SUMMARY TABLE */
+.summarytable th, .summarytable td { text-align: left; }
+
+/* GRID CARDS */
+.grid-3 { display: table; width: 100%; border-spacing: 8px; }
+.grid-3 .card { display: table-cell; width: 33%; padding: 10px; background: #e9f1fb; border: 1px solid #9eb6d0; vertical-align: top; }
+.grid-3 .card h3 { margin-bottom: 6px; color: #003366; }
+
+/* APPENDIX SIZING */
+.small th, .small td { font-size: 9.5px; }
+
+/* AVOID ROW SPLIT */
+tr { page-break-inside: avoid; }
